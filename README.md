@@ -1,7 +1,3 @@
-Here is a highly professional, senior-level `README.md` tailored specifically for your portfolio. It highlights your technical depth (the math), your architectural decisions (the microservices), and your data science maturity (explaining the 100% accuracy).
-
-Copy and paste this directly into your `README.md` file!
-
 ---
 
 # 🏥 Clinical Symptom Triage Classifier

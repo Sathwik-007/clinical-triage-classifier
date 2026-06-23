@@ -1,5 +1,3 @@
----
-
 # 🏥 Clinical Symptom Triage Classifier
 
 ## 📌 Project Overview

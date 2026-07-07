@@ -1,5 +1,5 @@
 __pycache__
-*.zip
+release_*_patients.csv
 .DS_Store
 .ipynb_checkpoints
 .vscode

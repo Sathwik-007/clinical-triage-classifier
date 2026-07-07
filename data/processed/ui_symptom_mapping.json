@@ -1,0 +1,21 @@
+{
+    "Pain (General)": "E_53",
+    "Shortness of breath": "E_66",
+    "Cough": "E_201",
+    "Fever": "E_91",
+    "Runny or congested nose": "E_181",
+    "Nausea or vomiting": "E_148",
+    "Skin lesions or redness": "E_143",
+    "Swelling": "E_151",
+    "Fatigue": "E_89",
+    "Increased sweating": "E_50",
+    "Diarrhea": "E_51",
+    "Symptoms worse with physical exertion": "E_218",
+    "Coughing up blood": "E_45",
+    "Wheezing": "E_214",
+    "Heart palpitations or racing heart": "E_162",
+    "Pain when breathing deeply": "E_220",
+    "Muscle pain": "E_144",
+    "Sore throat": "E_97",
+    "Lightheadedness or dizziness": "E_82"
+}

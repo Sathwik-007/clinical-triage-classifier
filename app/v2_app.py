@@ -26,7 +26,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🩺 Clinical Triage AI")
+st.title("🩺 Clinical Triage AI v2.0")
 st.markdown("Select patient symptoms below to generate an AI-powered differential diagnosis using the M4 PyTorch engine.")
 st.caption("Note: This is an AI portfolio project, not an actual medical advice.")
 st.divider()

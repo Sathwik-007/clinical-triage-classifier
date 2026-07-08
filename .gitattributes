@@ -1,2 +1,9 @@
+data/raw/symptom_Description.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/symptom_precaution.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/Symptom-severity.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/dataset.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/release_test_patients.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/release_train_patients.csv filter=lfs diff=lfs merge=lfs -text
+data/raw/release_validate_patients.csv filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text

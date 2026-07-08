@@ -3,6 +3,6 @@ __pycache__
 .DS_Store
 .ipynb_checkpoints
 .vscode
-./data/raw/release_test_patients.zip
-./data/raw/release_validate_patients.zip
-./data/raw/release_train_patients.zip
+./data/raw/release_test_patients.csv
+./data/raw/release_validate_patients.csv
+./data/raw/release_train_patients.csv

@@ -86,7 +86,7 @@ streamlit run app/streamlit_app.py
 
 The v2.0 system is built on a strict client-server decoupling, separating the Natural Language Processing (UI) from the mathematical engine (GPU/Backend).
 
-![v2.0 UI Image overview](./v2_UI.png)
+![v2.0 UI Image overview](./v2_ui.png)
 
 1. **Frontend (Streamlit):** A clean, human-readable UI that maps plain-English symptoms to complex clinical `E_codes` using a cached, pre-computed dictionary to ensure zero latency.
 2. **Backend (FastAPI):** A high-performance REST API that acts as the translation bridge. It receives clinical codes, dynamically constructs sparse multi-hot encoded tensors, and feeds them to the ML engine.

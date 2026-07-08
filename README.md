@@ -1,4 +1,8 @@
 # 🏥 Clinical Symptom Triage Classifier
+This repository contains two distinct iterations of the system:
+
+* **v1.0 (Foundational):** A foundational exercise in writing raw neural network mathematics (forward/backward propagation) using pure NumPy.
+* **v2.0 (Enterprise Scale):** Scales the architecture to an enterprise level utilizing PyTorch, a decoupled microservice architecture, and the **DDXPlus Dataset** (a highly complex, millions-of-rows synthetic clinical dataset) to deliver real-time differential diagnoses.
 
 ## 📌 Project Overview
 
@@ -77,3 +81,102 @@ streamlit run app/streamlit_app.py
 *The UI will automatically open in your browser at `http://localhost:8501`.*
 
 ---
+
+## 🏗️ System Architecture (v2.0)
+
+The v2.0 system is built on a strict client-server decoupling, separating the Natural Language Processing (UI) from the mathematical engine (GPU/Backend).
+
+1. **Frontend (Streamlit):** A clean, human-readable UI that maps plain-English symptoms to complex clinical `E_codes` using a cached, pre-computed dictionary to ensure zero latency.
+2. **Backend (FastAPI):** A high-performance REST API that acts as the translation bridge. It receives clinical codes, dynamically constructs sparse multi-hot encoded tensors, and feeds them to the ML engine.
+3. **ML Engine (PyTorch):** A custom deep learning model hardware-accelerated on Apple Metal Performance Shaders (`mps`).
+
+---
+
+## 🚀 Key Engineering Challenges Solved
+
+### 1. The Big Data Memory Bottleneck (Lazy Loading)
+
+**The Problem:** The DDXPlus training dataset contains over a million patient records. Attempting to pre-process and load a dense matrix of 1,000,000 patients $\times$ 131 symptoms into RAM would instantly cause an Out-Of-Memory (OOM) crash.
+**The Solution:** Implemented a custom PyTorch `Dataset` class leveraging the `__getitem__` magic method for **Lazy Loading**. The raw CSV remains on disk as cheap strings, and the heavy conversion into multi-hot floating-point tensors only occurs Just-In-Time (JIT) for the specific 1,024 patients in the active batch.
+
+### 2. The NLP & Clinical Code Gap
+
+**The Problem:** The DDXPlus dataset anonymizes clinical symptom names into raw codes (e.g., `E_53` instead of "Chest Pain"), making the model impossible for a human to interact with.
+**The Solution:** Wrote offline data-mining scripts to reverse-engineer the `release_conditions.json` and `release_evidences.json` files, isolating the top base symptoms. Engineered a cached translation layer in the frontend to seamlessly convert human clicks into PyTorch-ready tensor indices.
+
+---
+
+## 📦 Data Setup (Crucial First Step)
+
+Due to the massive size of the DDXPlus dataset, the raw data files are managed using **Git Large File Storage (LFS)** and are compressed. You must extract them before running the v2.0 pipeline.
+
+1. Ensure you have Git LFS installed and pull the large files:
+```bash
+git lfs pull
+
+```
+
+
+2. Navigate to the raw data directory:
+```bash
+cd data/raw/
+
+```
+
+
+3. **Unzip the datasets:** Extract all `.zip` files (e.g., `release_train_patients.zip`, `release_validate_patients.zip`) directly into this same `/data/raw/` directory. The scripts expect the raw `.csv` files to be present here.
+
+---
+
+## 🛠️ How to Run Locally
+
+Because of the decoupled architecture, you must run the Backend API and the Frontend UI on separate concurrent terminal windows.
+
+### 1. Clone & Install dependencies
+
+```bash
+git clone https://github.com/yourusername/clinical-triage-classifier.git
+cd clinical-triage-classifier
+pip install -r requirements.txt
+
+```
+
+### 2. Running v2.0 (PyTorch + DDXPlus)
+
+**Terminal 1: Boot the API Engine**
+
+```bash
+# Start the v2 FastAPI server
+uvicorn v2_main:app --reload
+
+```
+
+*Wait for the `✅ System Ready. Waiting for patients...` log.*
+
+**Terminal 2: Boot the UI**
+
+```bash
+# Start the v2 Streamlit frontend
+streamlit run v2_app.py
+
+```
+
+## 📊 Model Performance & Evaluation (v2.0)
+
+The model was trained using the Adam Optimizer and Cross-Entropy Loss, converging perfectly on the massive DDXPlus training set.
+
+* **Training Loss Convergence:** Plateaus cleanly at `0.0076`
+* **Validation Accuracy (Unseen Data):** `99.75%` (Evaluated on 132,448 records)
+
+![v2.0 Loss curve](./v2_scale_ddxplus/loss_curve.png)
+
+### 📊 Precision-Recall curve
+![v2.0 Precision-Recall curve](./v2_scale_ddxplus/pr_curve.png)
+---
+
+## 💻 Tech Stack
+
+* **Deep Learning:** PyTorch, Torch `DataLoader`, Apple `mps` backend
+* **API Routing:** FastAPI, Uvicorn, Pydantic
+* **Frontend:** Streamlit, Requests
+* **Data Engineering:** Pandas, JSON, Pickle, Git LFS
